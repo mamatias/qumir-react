@@ -11,3 +11,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 2rem;
+  border-bottom-width: solid 1px;
+}
+
+nav > button {
+  font-size: large;
+  border-width: 0;
+  background-color: white;
+  color: rgb(55, 73, 6);
+
+}
+
+nav > button:hover {
+  background-color: rgb(230, 230, 230);
+
+}
