@@ -1,44 +1,63 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import './home.css';
+import { makeStyles } from '@material-ui/core/styles';
+import { Avatar, Grid, Typography, Link } from '@material-ui/core';
+//import { Link } from 'react-router-dom';
 
-function SimpleMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: 'flex',
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+        paddingTop: theme.spacing(20),
+        flexGrow: 1,
+    },
+    large: {
+        width: theme.spacing(30),
+        height: theme.spacing(30),
+    },
+    center: {
+        display: 'flex',
+        justifyContent: 'center',
+    },
+}));
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+const CeldaHome = (props) => {
+    const classes = useStyles();
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <div>
-      <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-        Open Menu
-      </Button>
-      <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
-      </Menu>
-    </div>
-  );
+    return (
+        <React.Fragment>
+            <Link href={props.url} underline={'none'} >
+            <Grid container direction="column" justify="flex-start" alignItems="center" >
+                <Grid item >
+                    <Avatar alt="A" src={props.imgPath} className={classes.large} />
+                </Grid>
+                <Grid item>
+                    <Typography variant={'h5'} color={'textPrimary'}  >{props.texto}</Typography>
+                </Grid>
+            </Grid>
+            </Link>
+        </React.Fragment>
+    )
+    // <Typography>{props.texto}</Typography>
 }
 
 const Home = () => {
+    const classes = useStyles();
     return (
-        <div>
-            <h1>Home...</h1>
-            <SimpleMenu />
+        <div className={classes.root}>
+            <Grid container justify='space-between'>
+                <Grid item xs={12} sm={6} md={4} className={classes.center}>
+                    <CeldaHome texto={'Jardines'} imgPath={"/gardens.jpg"} url={'./jardines'} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} className={classes.center}>
+                    <CeldaHome texto={'Plantas'} imgPath={"/plants.jpg"} url={'./plantas'} />
+                </Grid>
+                <Grid item xs={12} sm={6} md={4} className={classes.center}>
+                    <CeldaHome texto={'Sucesos'} imgPath={"/actions.jpg"} url={'./sucesos'} />
+                </Grid>
+            </Grid>
         </div>
     )
 }
