@@ -1,160 +1,79 @@
-import React from 'react';
-import { Button, Divider, Typography, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, TextField } from '@material-ui/core';
+import { Box, Divider, Grid } from '@material-ui/core';
+import React, { useState } from 'react';
+import DialogNewJardin from './components/DialogNewJardin';
+import JardinSimple from './components/JardinSimple';
+import Cabecera from './components/Cabecera';
 
-class DialogForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            opened: false,
-            texto: props.texto,
-        }
+const Jardines = (props) => {
+  // Declaración de estados
+  const [jardines, setJardines] = useState(
+    localStorage.getItem('jardines') === null ?
+      () => {
+        localStorage.setItem('jardines', JSON.stringify([]));
+        return [];
+      } :
+      JSON.parse(localStorage.getItem('jardines'))
+  );
 
-        this.handleOpen = this.handleOpen.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSave = this.handleSave.bind(this);
+  // utilidades
+
+  const generarUniqueId = () => {
+    let uid = '';
+    let i;
+    for (i = 0; i < 5; i++) {
+      uid = uid + (Math.floor((1 + Math.random()) * 0x10000)
+        .toString(16)
+        .substring(1));
     }
+    return uid
+  }
 
-    handleClose() {
-        this.setState({
-            opened: false
-        })
-    }
+  const guardarNuevoJardin = (nombre) => {
+    const jardin_n = {
+      id: generarUniqueId(),
+      nombre: nombre,
+    };
+    const jardines_tr = [...jardines]; // Copia el arreglo y permite el re-renderizado
+    jardines_tr.push(jardin_n);
 
-    handleOpen() {
-        this.setState({
-            opened: true
-        })
-    }
+    setJardines(jardines_tr);
+    console.log(JSON.stringify(jardines_tr));
+    localStorage.setItem('jardines', JSON.stringify(jardines_tr));
+  };
 
-    handleChange = (event) => {
-        this.setState({
-            texto: event.target.value,
-            //opened: false
-        })
+  const borrarJardin = (id) => {
+    const jardines_cp = [...jardines];
+    let idx = jardines_cp.findIndex(jardin => jardin.id === id);
+    if (idx >= 0) {
+      jardines_cp.splice(idx, 1);
     }
+    setJardines(jardines_cp);
+    localStorage.setItem('jardines', JSON.stringify(jardines_cp));
+  }
 
-    handleSave() {
-        this.props.onSave(this.state.texto);
-        this.setState({
-            texto: '',
-            opened: false
-        });
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <Button onClick={this.handleOpen}>Agregar Jardín</Button>
-                <Dialog open={this.state.opened} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Crear nuevo jardín</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Un jardín permite llevar agrupadas las plantas monitorear.
-                    </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Descripción"
-                            type="email"
-                            fullWidth
-                            onChange={this.handleChange}
-                        />
-                        <Typography>{this.state.texto}</Typography>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
-                            Cancelar
-                        </Button>
-                        <Button onClick={this.handleSave} color="primary">
-                            Guardar
-                        </Button>
-                    </DialogActions>
-                </Dialog>
-            </React.Fragment>
-        )
-    }
+  return (
+    <React.Fragment>
+      <Grid container direction='column'>
+        <Cabecera titulo='Jardines' subtitulo='' />
+        <Grid item>
+          <Divider />
+          <Box
+            display="flex"
+            width='auto' height={80}
+            alignItems="center"
+            justifyContent="center"
+          >
+            <DialogNewJardin onSave={guardarNuevoJardin} />
+          </Box>
+          <Divider />
+        </Grid>
+        {jardines.map(
+          (jardin) => (<JardinSimple nombre={jardin.nombre} id={jardin.id} key={jardin.id} onDelete={borrarJardin} />)
+          // En paréntesis redondo en el arrow func. Permite evitar hacer el return
+        )}
+      </Grid>
+    </React.Fragment>
+  )
 }
 
-export default class Jardines extends React.Component {
-    constructor(props) {
-        super(props);
-        let jardines_l = localStorage.getItem('jardines');
-        if (jardines_l === null) {
-            jardines_l = [];
-            localStorage.setItem('jardines', JSON.stringify(jardines_l));
-        }
-        else {
-            jardines_l = JSON.parse(jardines_l);
-        }
-
-        this.state = {
-            jardines_i: jardines_l, // Jardín en uso actual
-            jardines_h: [], // Estructura ARRAY para almacenar jardines históricos (CTRL+Z)
-        };
-
-        this.agregarJardin = this.agregarJardin.bind(this);
-    }
-
-    generarUniqueId(){
-        let uid = '';
-        for(const i of Array(5).keys() ){
-            uid = uid+(Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1));
-        }
-        return uid
-    }
-
-    agregarJardin(nombre) {
-        // Hay que agregarlo al STATE y al LOCALSTORAGE
-        /* STATE */
-        //console.log('Jardín: '+nombre)
-        const jardines_i = this.state.jardines_i;
-        jardines_i.push({
-            id: this.generarUniqueId(),
-            nombre: nombre
-        });
-        this.setState({
-            jardines_i: jardines_i
-        });
-        localStorage.setItem('jardines', JSON.stringify(this.state.jardines_i));
-    }
-
-    renderJardines() {
-        let l = this.state.jardines_i.length;
-        if (l > 0) {
-            return (
-                <React.Fragment>
-                    <Typography>Con jardines</Typography>
-                    <ul>
-                        {this.state.jardines_i.map((jardin) => (
-                            <li id={jardin.nombre} key={jardin.nombre}><Typography>{jardin.nombre}</Typography></li>
-                        ))}
-                    </ul>
-                </React.Fragment>
-            )
-        }
-        else {
-            return (
-                <Typography>Sin jardines</Typography>
-            )
-        }
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <Typography>
-                    Jardines ({this.state.jardines_i.length})
-                </Typography>
-                {this.renderJardines()}
-                <Divider />
-                <DialogForm
-                    onSave={ this.agregarJardin }
-                />
-            </React.Fragment>
-        )
-    }
-}
+export default Jardines;

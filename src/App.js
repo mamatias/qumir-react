@@ -4,6 +4,8 @@ import Jardines from './Jardines';
 import Plantas from './Plantas';
 import Sucesos from './Sucesos';
 import Creditos from './Creditos';
+import Planta from './Planta';
+import Jardin from './Jardin';
 import { Route } from 'react-router-dom';
 import { CssBaseline, Container } from '@material-ui/core';
 
@@ -16,6 +18,8 @@ const App = () => {
                 <Route exact path='/plantas' component={Plantas} />
                 <Route exact path='/sucesos' component={Sucesos} />
                 <Route exact path='/creditos' component={Creditos} />
+                <Route path="/planta/:id" component={Planta} />
+                <Route path="/jardin/:id" component={Jardin} />
             </Container>
         </CssBaseline>
     )

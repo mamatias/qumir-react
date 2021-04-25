@@ -3,10 +3,16 @@ import { Box, Grid, IconButton, Typography } from '@material-ui/core'
 import { Delete, Edit } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
-const PlantaSimple = (props) => {
+const JardinSimple = (props) => {
     // Funciones de manejo
+    const manejarVer = (id) => {
+        //this.props.handleEdit(id);
+        console.log(id);
+    }
+
     const manejarBorrar = (id) => {
         props.onDelete(id);
+        console.log(id);
     }
 
     return (
@@ -30,8 +36,10 @@ const PlantaSimple = (props) => {
                     </Box>
                 </Grid>
                 <Grid item>
-                    <Link to={'/planta/' + props.id} >
-                        <IconButton >
+                    <Link to={'/jardin/' + props.id} >
+                        <IconButton onClick={
+                            () => { manejarVer(props.id) }
+                        }>
                             <Edit />
                         </IconButton>
                     </Link>
@@ -48,4 +56,4 @@ const PlantaSimple = (props) => {
     );
 }
 
-export default PlantaSimple;
+export default JardinSimple;
