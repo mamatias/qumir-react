@@ -23,7 +23,7 @@ const DialogNewJardin = (props) => {
 
     return (
         <React.Fragment>
-            <Button onClick={() => manejarEstado(true)}>Agregar Jardín</Button>
+            <Button variant="contained" color="primary" disableElevation onClick={() => manejarEstado(true)}>Agregar Jardín</Button>
             <Dialog open={abierto} onClose={() => manejarEstado(false)} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Crear nuevo jardín</DialogTitle>
                 <DialogContent>

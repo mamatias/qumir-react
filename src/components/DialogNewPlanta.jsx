@@ -23,7 +23,7 @@ const DialogNewPlanta = (props) => {
 
     return (
         <React.Fragment>
-            <Button onClick={() => manejarEstado(true)}>Agregar Planta</Button>
+            <Button variant="contained" color="primary" disableElevation onClick={() => manejarEstado(true)}>Agregar Planta</Button>
             <Dialog open={abierto} onClose={() => manejarEstado(false)} aria-labelledby="form-dialog-title">
                 <DialogTitle id="form-dialog-title">Crear nueva planta</DialogTitle>
                 <DialogContent>

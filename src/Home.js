@@ -49,13 +49,13 @@ const Home = () => {
         <div className={classes.root}>
             <Grid container justify='space-between'>
                 <Grid item xs={12} sm={6} md={4} className={classes.center}>
-                    <CeldaHome texto={'Jardines'} imgPath={"/gardens.jpg"} url={'./jardines'} />
+                    <CeldaHome texto={'Jardines'} imgPath={"/gardens.jpg"} url={'./#/jardines'} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} className={classes.center}>
-                    <CeldaHome texto={'Plantas'} imgPath={"/plants.jpg"} url={'./plantas'} />
+                    <CeldaHome texto={'Plantas'} imgPath={"/plants.jpg"} url={'./#/plantas'} />
                 </Grid>
                 <Grid item xs={12} sm={6} md={4} className={classes.center}>
-                    <CeldaHome texto={'Sucesos'} imgPath={"/actions.jpg"} url={'./sucesos'} />
+                    <CeldaHome texto={'Sucesos'} imgPath={"/actions.jpg"} url={'./#/sucesos'} />
                 </Grid>
             </Grid>
         </div>

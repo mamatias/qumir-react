@@ -7,7 +7,7 @@ import Creditos from './Creditos';
 import Planta from './Planta';
 import Jardin from './Jardin';
 import { Route } from 'react-router-dom';
-import { CssBaseline, Container } from '@material-ui/core';
+import { CssBaseline, Container, Typography } from '@material-ui/core';
 
 const App = () => {
     return (
@@ -20,6 +20,7 @@ const App = () => {
                 <Route exact path='/creditos' component={Creditos} />
                 <Route path="/planta/:id" component={Planta} />
                 <Route path="/jardin/:id" component={Jardin} />
+                <Typography>Esto va fijo...</Typography>
             </Container>
         </CssBaseline>
     )

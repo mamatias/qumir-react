@@ -5,6 +5,7 @@ const Cabecera = (props) => {
     return (
         <React.Fragment >
             <Box display='flex'
+                flexDirection='column'
                 width='auto'
                 height={250}
                 alignItems='center'

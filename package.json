@@ -1,15 +1,23 @@
 {
   "name": "qumir-react",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "homepage": "https://qumirproject.github.io/",
   "dependencies": {
+    "@date-io/date-fns": "1.3.11",
+    "@date-io/dayjs": "1.3.11",
+    "@date-io/luxon": "1.3.11",
+    "@date-io/moment": "1.3.11",
     "@material-ui/core": "4.11.3",
     "@material-ui/icons": "4.11.2",
+    "@material-ui/pickers": "^3.3.10",
     "@material-ui/styles": "4.11.3",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+    "date-fns": "^2.21.1",
     "react": "^17.0.2",
+    "react-calendar": "^3.4.0",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -19,7 +27,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run-script build",
+    "deploy": "rm -r /home/m/www/qumirproject.github.io/*  && mv ./build/* /home/m/www/qumirproject.github.io/ && cd /home/m/www/qumirproject.github.io/"
   },
   "eslintConfig": {
     "extends": [

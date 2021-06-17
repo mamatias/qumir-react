@@ -1,9 +1,8 @@
 import React from 'react';
 import { Box, Grid, IconButton, Typography } from '@material-ui/core'
-import { Delete, Edit } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { Delete } from '@material-ui/icons';
 
-const PlantaSimple = (props) => {
+const RiegoSimple = (props) => {
     // Funciones de manejo
     const manejarBorrar = (id) => {
         props.onDelete(id);
@@ -19,22 +18,24 @@ const PlantaSimple = (props) => {
                 key={props.id}
             >
                 <Grid item>
-                    <Box
+                <Box
                         display="flex"
-                        width={500} height={40}
-                        bgcolor="white"
+                        width="auto" height={40}
+                        bgcolor="pink"
                         alignItems="center"
                         justifyContent="center"
                     >
-                        <Typography>{props.nombre}</Typography>
+                        <Typography>{props.fecha}</Typography>
                     </Box>
-                </Grid>
-                <Grid item>
-                    <Link to={'/planta/' + props.id + '?' + props.jardin_id} >
-                        <IconButton >
-                            <Edit />
-                        </IconButton>
-                    </Link>
+                    <Box
+                        display="flex"
+                        width="auto" height={40}
+                        bgcolor="pink"
+                        alignItems="center"
+                        justifyContent="center"
+                    >
+                        <Typography>{props.cantidad} [ml]</Typography>
+                    </Box>
                 </Grid>
                 <Grid item>
                     <IconButton onClick={
@@ -48,4 +49,4 @@ const PlantaSimple = (props) => {
     );
 }
 
-export default PlantaSimple;
+export default RiegoSimple;

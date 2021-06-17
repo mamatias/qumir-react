@@ -28,6 +28,11 @@ const Jardines = (props) => {
     return uid
   }
 
+  const actualizarStorage = (jardines_fn) => {
+    setJardines(jardines_fn);
+    localStorage.setItem('jardines', JSON.stringify(jardines_fn));
+  };
+
   const guardarNuevoJardin = (nombre) => {
     const jardin_n = {
       id: generarUniqueId(),
@@ -36,19 +41,19 @@ const Jardines = (props) => {
     const jardines_tr = [...jardines]; // Copia el arreglo y permite el re-renderizado
     jardines_tr.push(jardin_n);
 
-    setJardines(jardines_tr);
-    console.log(JSON.stringify(jardines_tr));
-    localStorage.setItem('jardines', JSON.stringify(jardines_tr));
+    // Guardar jardines
+    actualizarStorage(jardines_tr);
   };
 
   const borrarJardin = (id) => {
-    const jardines_cp = [...jardines];
-    let idx = jardines_cp.findIndex(jardin => jardin.id === id);
+    const jardines_tr = [...jardines];
+    let idx = jardines_tr.findIndex(jardin => jardin.id === id);
     if (idx >= 0) {
-      jardines_cp.splice(idx, 1);
+      jardines_tr.splice(idx, 1);
+
+      // Guardar jardines
+      actualizarStorage(jardines_tr);
     }
-    setJardines(jardines_cp);
-    localStorage.setItem('jardines', JSON.stringify(jardines_cp));
   }
 
   return (
